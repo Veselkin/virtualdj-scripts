@@ -1,0 +1,7 @@
+<page name="custom">
+<pad1 name="1">deck 1 stop & browser_gotofolder "1" & browser_window 'songs' & wait 100ms & browser_scroll +1 & deck 1 load & deck 1 play</pad1>
+<pad2 name="2">deck 1 stop & browser_gotofolder "2" & browser_window 'songs' & wait 100ms & browser_scroll +1 & deck 1 load & deck 1 play</pad2>
+<pad3 name="3">deck 1 stop & browser_gotofolder "3" & browser_window 'songs' & wait 100ms & browser_scroll +1 & deck 1 load & deck 1 play</pad3>
+<pad4 name="4">deck 1 stop & browser_gotofolder "4" & browser_window 'songs' & wait 100ms & browser_scroll +1 & deck 1 load & deck 1 play</pad4>
+<pad5 name="5">deck 1 stop & browser_gotofolder "5" & browser_window 'songs' & wait 100ms & browser_scroll +1 & deck 1 load & deck 1 play</pad5>
+</page>
