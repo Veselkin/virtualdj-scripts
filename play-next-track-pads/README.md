@@ -11,9 +11,10 @@
 1. Останавливает деку.
 2. Переходит в нужную папку.
 3. Загружает **первый ещё не проигранный трек** из неё.
-4. Запускает воспроизведение.
-5. Сдвигает указатель на следующий трек в этой же папке — чтобы при следующем нажатии этого пада включился уже другой файл.
-6. Если это был последний трек в папке — при следующем нажатии список начнётся заново с первого трека (зацикливание).
+4. Принудительно ставит воспроизведение на первую cue-точку трека.
+5. Запускает воспроизведение.
+6. Сдвигает указатель на следующий трек в этой же папке — чтобы при следующем нажатии этого пада включился уже другой файл.
+7. Если это был последний трек в папке — при следующем нажатии список начнётся заново с первого трека (зацикливание).
 
 То есть один пад = одна тематическая папка (например, «Выход молодых», «Конкурсы», «Тосты»), а трек внутри неё каждый раз меняется по кругу, и вам не нужно помнить, что уже играло.
 
@@ -39,7 +40,11 @@
 
 В каждую избранную папку добавьте нужные аудиофайлы **в том порядке**, в котором они должны воспроизводиться при последовательных нажатиях пада.
 
-### 3. Импортируйте маппинг
+### 3. Настройте cue-точки на треках (опционально)
+
+Если хотите, чтобы подзвучка стартовала не с самого начала файла, а с конкретного места (например, пропуская тишину в начале), поставьте на треке **HotCue 1** в нужном месте и включите `autoSortCues = Yes` в настройках VirtualDJ (Options → Search: `autoSortCues`), чтобы HotCue 1 всегда соответствовал самой ранней по времени точке на треке, а не первой созданной по порядку.
+
+### 4. Импортируйте маппинг
 
 Откройте настройки вашего контроллера в VirtualDJ (**Settings → Controllers → Mapping**) и назначьте падам приведённый ниже скрипт (или импортируйте `.xml` из этого репозитория).
 
@@ -47,11 +52,11 @@
 
 ```xml
 <page name="custom">
-<pad1 name="1">deck 1 stop & browser_gotofolder "1" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad1>
-<pad2 name="2">deck 1 stop & browser_gotofolder "2" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad2>
-<pad3 name="3">deck 1 stop & browser_gotofolder "3" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad3>
-<pad4 name="4">deck 1 stop & browser_gotofolder "4" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad4>
-<pad5 name="5">deck 1 stop & browser_gotofolder "5" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad5>
+<pad1 name="1">deck 1 stop & browser_gotofolder "1" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad1>
+<pad2 name="2">deck 1 stop & browser_gotofolder "2" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad2>
+<pad3 name="3">deck 1 stop & browser_gotofolder "3" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad3>
+<pad4 name="4">deck 1 stop & browser_gotofolder "4" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad4>
+<pad5 name="5">deck 1 stop & browser_gotofolder "5" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad5>
 </page>
 ```
 
@@ -64,20 +69,26 @@
 | `browser_window 'songs'` | Переключает фокус браузера на список треков (а не на список папок) |
 | `wait 100ms` | Небольшая пауза, чтобы браузер успел обновиться перед загрузкой |
 | `deck 1 load` | Загружает выделенный трек на деку 1 |
+| `deck 1 goto_cue 1` | Принудительно переставляет позицию на HotCue 1 (или на начало трека, если хотcue не задан) |
 | `deck 1 play` | Запускает воспроизведение |
 | `browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1` | Если текущий трек — последний в папке, возвращает указатель на первый трек; иначе сдвигает указатель на следующий трек |
 
-## Почему добавлена проверка на конец списка
+## Почему добавлена явная команда `goto_cue 1`
 
-В базовой версии скрипта (`browser_scroll +1` без условия) после проигрывания последнего трека в папке указатель упирался в конец списка и "зависал" — при повторных нажатиях пада продолжал грузиться один и тот же последний трек.
+Настройка **Auto Cue** (Options → `autoCue`) при обычной ручной загрузке трека (drag & drop в деку) корректно переставляет позицию на HotCue 1, потому что VirtualDJ успевает выполнить весь цикл: загрузка → анализ трека → применение autoCue — прежде чем что-либо ещё происходит.
 
-Добавленное условие проверяет, находится ли выделение внизу списка (`browser_scroll 'bottom'` в роли проверки, а не команды), и если да — перебрасывает его в начало папки (`browser_scroll 'top'`), обеспечивая зацикливание.
+При запуске через VDJScript команда `deck 1 play`, идущая сразу за `deck 1 load`, может сработать быстрее, чем VirtualDJ успевает применить autoCue-позиционирование — в результате трек стартовал с самого начала файла (или с произвольного места), игнорируя сохранённую cue-точку.
+
+Добавление явной команды `deck 1 goto_cue 1` между `load` и `play` решает проблему: скрипт больше не полагается на автоматику и тайминги, а сам принудительно ставит воспроизведение на нужную точку перед стартом.
+
+> Если у трека нет сохранённого HotCue 1, `goto_cue 1` переставит позицию на начало трека — поведение безопасно для файлов без cue-точек.
 
 ## Кастомизация
 
 - **Другая дека** — замените `deck 1` на нужный номер деки во всех местах строки.
 - **Другие номера/имена папок** — замените `"1"`–`"5"` на свои значения; количество падов не ограничено пятью, добавляйте по аналогии.
 - **Без остановки текущего трека** — уберите `deck 1 stop`, если хотите, чтобы новый трек подгружался без обрыва текущего (актуально, если используете отдельную деку под подзвучки, не пересекающуюся с музыкальной). Может не работать без `deck 1 stop`, если в настройках включено **`load security`** на режимы **`On`** и **`Silent`**.
+- **Без принудительного cue** — уберите `deck 1 goto_cue 1` из строки, если хотите вернуться к поведению по умолчанию (автоматика VirtualDJ + autoCue).
 
 ## Требования
 
