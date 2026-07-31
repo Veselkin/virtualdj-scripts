@@ -9,30 +9,38 @@
 Каждый пад привязан к отдельной **избранной папке (favorite folder)** в VirtualDJ. При нажатии пада скрипт:
 
 1. Останавливает деку.
-2. Переходит в нужную папку.
-3. Загружает **первый ещё не проигранный трек** из неё.
-4. Принудительно ставит воспроизведение на первую cue-точку трека.
-5. Запускает воспроизведение.
-6. Сдвигает указатель на следующий трек в этой же папке — чтобы при следующем нажатии этого пада включился уже другой файл.
-7. Если это был последний трек в папке — при следующем нажатии список начнётся заново с первого трека (зацикливание).
+2. Принудительно выводит кроссфейдер на сторону деки 1 и громкость деки 1 на максимум — чтобы подзвучка гарантированно была слышна, независимо от того, в каком положении их оставили до этого.
+3. Переходит в нужную папку.
+4. Загружает **первый ещё не проигранный трек** из неё.
+5. Принудительно ставит воспроизведение на первую cue-точку трека.
+6. Запускает воспроизведение.
+7. Сдвигает указатель на следующий трек в этой же папке — чтобы при следующем нажатии этого пада включился уже другой файл.
+8. Если это был последний трек в папке — при следующем нажатии список начнётся заново с первого трека (зацикливание).
 
 То есть один пад = одна тематическая папка (например, «Выход молодых», «Конкурсы», «Тосты»), а трек внутри неё каждый раз меняется по кругу, и вам не нужно помнить, что уже играло.
+
+Маппинг поддерживает до **16 падов на страницу** — 8 обычных и ещё 8 через Shift (это официальный лимит VirtualDJ для одной страницы падов). Обычные и Shift-пады работают полностью одинаково, различаясь только тем, какую физическую кнопку контроллера нужно нажимать.
 
 ## Настройка
 
 ### 1. Создайте избранные папки в VirtualDJ
 
-В браузере VirtualDJ создайте папки Favorites с **именами-номерами**, которые совпадают с номерами в скрипте:
+В браузере VirtualDJ создайте папки Favorites с **именами-номерами**, которые совпадают с номерами в скрипте. В полной версии маппинга (16 падов) это папки от 1 до 16:
 
 ```
 1
 2
-3
-4
-5
+...
+8   (обычные пады 1–8)
+9
+10
+...
+16  (те же пады, но через Shift)
 ```
 
-Можно переименовать их для себя как угодно (например «Выход», «Конкурс», «Тост»), главное — чтобы **внутреннее имя папки**, на которое ссылается `browser_gotofolder`, совпадало с тем, что указано в скрипте пада.
+Если вам хватает 5 или 8 падов — просто не создавайте лишние папки и уберите соответствующие `pad`/`shift_pad` строки из XML.
+
+Можно переименовать папки для себя как угодно (например «Выход», «Конкурс», «Тост»), главное — чтобы **внутреннее имя папки**, на которое ссылается `browser_gotofolder`, совпадало с тем, что указано в скрипте пада. Готовый пример с осмысленными именами вместо номеров — [`mapping-example-named.xml`](./mapping-example-named.xml) (страница `Отбивки`, 8 обычных падов + 4 через Shift).
 
 > Если хотите более понятные названия папок — просто замените `"1"`, `"2"` и т.д. в скрипте на реальные имена ваших папок, например `browser_gotofolder "Выход молодых"`.
 
@@ -46,17 +54,55 @@
 
 ### 4. Импортируйте маппинг
 
-Откройте настройки вашего контроллера в VirtualDJ (**Settings → Controllers → Mapping**) и назначьте падам приведённый ниже скрипт (или импортируйте `.xml` из этого репозитория).
+Есть два способа привязать скрипт к физическим кнопкам контроллера — какой подойдёт, зависит от того, распознаёт ли VirtualDJ ваше устройство как «контроллер с падами».
+
+**Способ А — через Pads Editor.** Если ваш контроллер поддерживается VirtualDJ нативно как устройство с падами, откройте **Settings → Controllers → Mapping** и назначьте падам приведённый ниже скрипт (или импортируйте `.xml` из этого репозитория целиком через Pads Editor).
+
+**Способ Б — прямой маппинг кнопок (нужен для виртуальных MIDI-портов, например loopMIDI).** Виртуальный MIDI-порт VirtualDJ не воспринимает как «настоящий» контроллер с падами, поэтому Pads Editor для него недоступен — вместо этого каждая физическая кнопка мапится напрямую в **Settings → Controllers**:
+
+1. Откройте **Settings → Controllers**, выберите ваше устройство (например, `loopMIDI Port`).
+2. В выпадающем списке **Mapping** выберите `Custom Mapping`, в **Deck** — нужную деку (`left`/`right`).
+3. Нажмите на физическую кнопку контроллера — она подставится в поле **Key** (например, `9-BUTTON40`), либо выберите её вручную из списка слева.
+4. В поле **Action** впишите команду, которая переключает на нужную pad-страницу и сразу «нажимает» на ней нужный пад:
+   - для обычного пада (1–8): `deck 1 pad_page "ИмяСтраницы" & deck 1 pad N`
+   - для Shift-пада (1–8, соответствует `shift_pad1`–`shift_pad8`): `deck 1 pad_page "ИмяСтраницы" & deck 1 padshift N`
+
+   Например, если у вас страница называется `Отбивки` (как в файле [`mapping-example-named.xml`](./mapping-example-named.xml)), и нужно нажать третий Shift-пад (`shift_pad3`, в примере это «Выход»):
+   ```
+   deck 1 pad_page "Отбивки" & deck 1 padshift 3
+   ```
+   А для обычного пада 3 («Откат»):
+   ```
+   deck 1 pad_page "Отбивки" & deck 1 pad 3
+   ```
+5. Повторите для каждой физической кнопки, меняя только номер пада (`pad N` / `padshift N`).
+
+> Важно: имя страницы в команде (`"Отбивки"`) должно **точно** совпадать с атрибутом `name` в `<page name="...">` вашего файла маппинга падов — включая регистр и точное написание.
+>
+> Этот способ полезен и для обычных контроллеров, если хочется, чтобы одна и та же физическая кнопка всегда вызывала конкретный пад конкретной страницы, независимо от того, какая страница активна на экране сейчас — обычное нажатие пада в интерфейсе выполняет то, что назначено на активной странице, а `pad_page & pad/padshift` жёстко привязывает кнопку к странице и паду.
 
 ## Скрипт маппинга
 
+Полная версия на 16 падов (8 обычных + 8 Shift), актуальный файл — [`mapping.xml`](./mapping.xml):
+
 ```xml
 <page name="custom">
-<pad1 name="1">deck 1 stop & browser_gotofolder "1" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad1>
-<pad2 name="2">deck 1 stop & browser_gotofolder "2" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad2>
-<pad3 name="3">deck 1 stop & browser_gotofolder "3" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad3>
-<pad4 name="4">deck 1 stop & browser_gotofolder "4" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad4>
-<pad5 name="5">deck 1 stop & browser_gotofolder "5" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad5>
+<pad1 name="1">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "1" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad1>
+<pad2 name="2">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "2" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad2>
+<pad3 name="3">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "3" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad3>
+<pad4 name="4">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "4" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad4>
+<pad5 name="5">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "5" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad5>
+<pad6 name="6">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "6" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad6>
+<pad7 name="7">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "7" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad7>
+<pad8 name="8">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "8" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad8>
+<shift_pad1 name="9">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "9" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad1>
+<shift_pad2 name="10">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "10" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad2>
+<shift_pad3 name="11">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "11" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad3>
+<shift_pad4 name="12">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "12" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad4>
+<shift_pad5 name="13">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "13" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad5>
+<shift_pad6 name="14">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "14" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad6>
+<shift_pad7 name="15">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "15" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad7>
+<shift_pad8 name="16">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "16" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad8>
 </page>
 ```
 
@@ -65,6 +111,8 @@
 | Команда | Что делает |
 |---|---|
 | `deck 1 stop` | Останавливает текущее воспроизведение на деке 1 перед загрузкой нового трека |
+| `crossfader 0%` | Принудительно переводит кроссфейдер в крайнее положение стороны деки 1, чтобы подзвучку было слышно, даже если кроссфейдер был выведен на деку 2 |
+| `deck 1 volume 100%` | Принудительно выводит громкость деки 1 на максимум, чтобы подзвучку было слышно, даже если фейдер деки 1 был опущен |
 | `browser_gotofolder "N"` | Переходит в избранную папку с именем N |
 | `browser_window 'songs'` | Переключает фокус браузера на список треков (а не на список папок) |
 | `wait 100ms` | Небольшая пауза, чтобы браузер успел обновиться перед загрузкой |
@@ -72,6 +120,14 @@
 | `deck 1 goto_cue 1` | Принудительно переставляет позицию на HotCue 1 (или на начало трека, если хотcue не задан) |
 | `deck 1 play` | Запускает воспроизведение |
 | `browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1` | Если текущий трек — последний в папке, возвращает указатель на первый трек; иначе сдвигает указатель на следующий трек |
+
+## Зачем принудительно выставлять кроссфейдер и громкость
+
+Если дека 1 используется и под музыку, и под подзвучки, к моменту нажатия пада кроссфейдер и уровень громкости деки 1 могут быть в любом положении — например, диджей мог свести кроссфейдер в сторону деки 2 или прикрутить фейдер деки 1 под конкретный трек.
+
+Команды `crossfader 0%` и `deck 1 volume 100%` перед загрузкой подзвучки гарантируют, что она будет слышна независимо от того, что происходило на деке до этого — не нужно вручную проверять положение фейдеров перед каждым нажатием пада.
+
+> Если кроссфейдер вам не нужен (например, подзвучки идут через отдельную деку без сведения с музыкальной) — уберите `crossfader 0%` и/или `deck 1 volume 100%` из строки, см. раздел «Кастомизация».
 
 ## Почему добавлена явная команда `goto_cue 1`
 
@@ -86,14 +142,17 @@
 ## Кастомизация
 
 - **Другая дека** — замените `deck 1` на нужный номер деки во всех местах строки.
-- **Другие номера/имена папок** — замените `"1"`–`"5"` на свои значения; количество падов не ограничено пятью, добавляйте по аналогии.
+- **Другие номера/имена папок** — замените `"1"`–`"16"` на свои значения; количество падов ограничено только лимитом VirtualDJ (см. «Требования» ниже), добавляйте/убирайте по аналогии.
+- **Меньше 16 падов** — если хватает 5 или 8, просто оставьте в XML только нужные `pad`/`shift_pad` строки и соответствующие им папки.
 - **Без остановки текущего трека** — уберите `deck 1 stop`, если хотите, чтобы новый трек подгружался без обрыва текущего (актуально, если используете отдельную деку под подзвучки, не пересекающуюся с музыкальной). Может не работать без `deck 1 stop`, если в настройках включено **`load security`** на режимы **`On`** и **`Silent`**.
+- **Без принудительного кроссфейдера/громкости** — уберите `crossfader 0%` и/или `deck 1 volume 100%`, если управляете сведением вручную или используете отдельную деку под подзвучки.
 - **Без принудительного cue** — уберите `deck 1 goto_cue 1` из строки, если хотите вернуться к поведению по умолчанию (автоматика VirtualDJ + autoCue).
 
 ## Требования
 
 - VirtualDJ (Pro/Plus, поддержка VDJScript)
 - MIDI-контроллер с назначаемыми падами
+- Официальный лимит VirtualDJ — 16 падов на одну страницу (8 обычных + 8 через Shift); для Shift-падов нужно, чтобы функция Shift была замаплена на контроллер или клавиатуру (либо используйте правый клик мышью)
 
 ## Полезно для
 
