@@ -9,7 +9,7 @@
 ## Скрипты
 
 - [Play Next Track Pads — запуск треков из плейлистов Favorites](./play-next-track-pads/README.md)
-- [Auto-Mix Pads — автоматический микс одной кнопкой](./auto-mix-pads/README.md)
+- [Auto Mix Pads — автоматический микс одной кнопкой (в разработке)](./README.md)
 
 ## Требования
 
