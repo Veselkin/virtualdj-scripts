@@ -79,32 +79,11 @@
 
 > Важно: имя страницы в команде (`"Отбивки"`) должно **точно** совпадать с атрибутом `name` в `<page name="...">` вашего файла маппинга падов — включая регистр и точное написание.
 >
-> Этот способ полезен и для обычных контроллеров, если хочется, чтобы одна и та же физическая кнопка всегда вызывала конкретный пад конкретной страницы, независимо от того, какая страница активна на экране сейчас — обычное нажатие пада в интерфейсе выполняет то, что назначено на активной странице, а `pad_page & pad/padshift` жёстко привязывает кнопку к странице и паду.
+> Этот способ полезен и для обычных контроллеров, если хочется, чтобы одна и та же физическая кнопка всегда вызывала конкретную страницу, независимо от того, какая страница активна на экране — обычное нажатие пада в интерфейсе выполняет то, что назначено на активной странице, а `pad_page & pad/padshift` жёстко привязывает кнопку к странице и паду.
 
 ## Скрипт маппинга
 
 Полная версия на 16 падов (8 обычных + 8 Shift), актуальный файл — [`mapping.xml`](./mapping.xml):
-
-```xml
-<page name="custom">
-<pad1 name="1">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "1" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad1>
-<pad2 name="2">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "2" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad2>
-<pad3 name="3">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "3" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad3>
-<pad4 name="4">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "4" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad4>
-<pad5 name="5">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "5" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad5>
-<pad6 name="6">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "6" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad6>
-<pad7 name="7">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "7" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad7>
-<pad8 name="8">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "8" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad8>
-<shift_pad1 name="9">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "9" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad1>
-<shift_pad2 name="10">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "10" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad2>
-<shift_pad3 name="11">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "11" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad3>
-<shift_pad4 name="12">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "12" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad4>
-<shift_pad5 name="13">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "13" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad5>
-<shift_pad6 name="14">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "14" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad6>
-<shift_pad7 name="15">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "15" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad7>
-<shift_pad8 name="16">deck 1 stop & crossfader 0% & deck 1 volume 100% & browser_gotofolder "16" & browser_window 'songs' & wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll 'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad8>
-</page>
-```
 
 ### Разбор команд построчно
 
@@ -113,6 +92,8 @@
 | `deck 1 stop` | Останавливает текущее воспроизведение на деке 1 перед загрузкой нового трека |
 | `crossfader 0%` | Принудительно переводит кроссфейдер в крайнее положение стороны деки 1, чтобы подзвучку было слышно, даже если кроссфейдер был выведен на деку 2 |
 | `deck 1 volume 100%` | Принудительно выводит громкость деки 1 на максимум, чтобы подзвучку было слышно, даже если фейдер деки 1 был опущен |
+| `smart_fader off` | Отключает смарт-кроссфейдер |
+| `pitch_lock off` | Отключает фиксацию тональности |
 | `browser_gotofolder "N"` | Переходит в избранную папку с именем N |
 | `browser_window 'songs'` | Переключает фокус браузера на список треков (а не на список папок) |
 | `wait 100ms` | Небольшая пауза, чтобы браузер успел обновиться перед загрузкой |
