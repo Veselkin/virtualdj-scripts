@@ -2,7 +2,7 @@
 
 Коллекция скриптов и MIDI-маппингов для VirtualDJ (VDJScript). Репозиторий создан для хранения рабочих связок "MIDI-контроллер → VirtualDJ", которые не всегда очевидны из официальной документации и требуют доработки методом проб и ошибок.
 
-## Полный список комманд-глаголов (verbs) используемых в скриптах VDJScript
+## Полный список команд-глаголов (verbs) используемых в скриптах VDJScript
 
 - [List of VDJScript verbs](https://virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html)
 
