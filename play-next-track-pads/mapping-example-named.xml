@@ -1,58 +1,69 @@
-```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <pad_page name="Отбивки">
 	<pad1 name="Лира">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
-		pitch_lock off & browser_gotofolder "Лира" & browser_window 'songs' & wait 100ms
-		& deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
+		pitch_lock off & deck 1 pfl off & browser_gotofolder "Лира" & browser_window 'songs' &
+		wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
 		'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad1>
 	<pad2 name="Подклад">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
-        pitch_lock off & browser_gotofolder "Подклад" & browser_window 'songs' & wait
+		pitch_lock off & deck 1 pfl off & browser_gotofolder "Подклад" & browser_window 'songs' &
+		wait
 		100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
 		'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad2>
 	<pad3 name="Откат">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
-        pitch_lock off & browser_gotofolder "Откат" & browser_window 'songs' & wait 100ms
-		& deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
+		pitch_lock off & deck 1 pfl off & browser_gotofolder "Откат" & browser_window 'songs' & wait
+		100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
 		'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad3>
 	<pad4 name="Отбивка">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
-		pitch_lock off & browser_gotofolder "Отбивка" & browser_window 'songs' & wait
+		pitch_lock off & deck 1 pfl off & browser_gotofolder "Отбивка" & browser_window 'songs' &
+		wait
 		100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
 		'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad4>
 	<pad5 name="Ретро подклад">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
-		pitch_lock off & browser_gotofolder "Ретро подклад" & browser_window 'songs' &
+		pitch_lock off & deck 1 pfl off & browser_gotofolder "Ретро подклад" & browser_window
+		'songs' &
 		wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
 		'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad5>
 	<pad6 name="Ретро откат">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
-		pitch_lock off & browser_gotofolder "Ретро откат" & browser_window 'songs' & wait
-		100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
+		pitch_lock off & deck 1 pfl off & browser_gotofolder "Ретро откат" & browser_window
+		'songs' &
+		wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
 		'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad6>
 	<pad7 name="Ретро отбивка">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
-		pitch_lock off & browser_gotofolder "Ретро отбивка" & browser_window 'songs' &
+		pitch_lock off & deck 1 pfl off & browser_gotofolder "Ретро отбивка" & browser_window
+		'songs' &
 		wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
 		'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad7>
 	<pad8 name="День рождения">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
-		pitch_lock off & browser_gotofolder "День рождения" & browser_window 'songs' &
+		pitch_lock off & deck 1 pfl off & browser_gotofolder "День рождения" & browser_window
+		'songs' &
 		wait 100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
 		'bottom' ? browser_scroll 'top' : browser_scroll +1)</pad8>
-	<shift_pad1 name="Юбилей">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
-		pitch_lock off & browser_gotofolder "Юбилей" & browser_window 'songs' & wait
+	<shift_pad1 name="Проходки">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
+		pitch_lock off & deck 1 pfl off & browser_gotofolder "Проходки" & browser_window 'songs' &
+		wait
 		100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
 		'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad1>
 	<shift_pad2 name="Фанфары">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
-		pitch_lock off & browser_gotofolder "Фанфары" & browser_window 'songs' & wait
+		pitch_lock off & deck 1 pfl off & browser_gotofolder "Фанфары" & browser_window 'songs' &
+		wait
 		100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
 		'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad2>
 	<shift_pad3 name="Выход">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
-		pitch_lock off & browser_gotofolder "Выход" & browser_window 'songs' & wait 100ms
-		& deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
+		pitch_lock off & deck 1 pfl off & browser_gotofolder "Выход" & browser_window 'songs' & wait
+		100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
 		'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad3>
 	<shift_pad4 name="Свадьба">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader off &
-		pitch_lock off & browser_gotofolder "Свадьба" & browser_window 'songs' & wait
+		pitch_lock off & deck 1 pfl off & browser_gotofolder "Свадьба" & browser_window 'songs' &
+		wait
 		100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
 		'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad4>
-	<shift_pad5 />
+	<shift_pad5 name="Перетанцовка">deck 1 stop & crossfader 0% & deck 1 volume 100% & smart_fader
+		off & pitch_lock off & deck 1 pfl off & browser_gotofolder "Перетанцовка" & browser_window
+		'songs' & wait
+		100ms & deck 1 load & deck 1 goto_cue 1 & deck 1 play & (browser_scroll
+		'bottom' ? browser_scroll 'top' : browser_scroll +1)</shift_pad5>
 	<shift_pad6 />
 	<shift_pad7 />
 	<shift_pad8 />
 	<param1 name="Отбивки" />
 </pad_page>
-```
