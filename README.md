@@ -2,11 +2,14 @@
 
 Коллекция скриптов и MIDI-маппингов для VirtualDJ (VDJScript). Репозиторий создан для хранения рабочих связок "MIDI-контроллер → VirtualDJ", которые не всегда очевидны из официальной документации и требуют доработки методом проб и ошибок.
 
-Используется VirtualDJ 2025, 2026, Windows.
+## Полный список глаголов (verbs) используемых в скриптах VDJScript
+
+- [List of VDJScript verbs](https://virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html)
 
 ## Скрипты
 
-- [Play Next Track — пады → плейлисты](./play-next-track-pads/README.md)
+- [Play Next Track Pads — запуск треков из плейлистов Favorites](./play-next-track-pads/README.md)
+- [Auto-Mix Pads — автоматический микс одной кнопкой](./auto-mix-pads/README.md)
 
 ## Требования
 
